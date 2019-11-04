@@ -1,0 +1,8 @@
+useDynLib(gdxrrw, gamsExt=gams, gdxInfoExt=gdxInfo, igdxExt=igdx,
+          rgdxExt=rgdx, wgdxExt=wgdx)
+
+# export the functions
+export (rgdx, wgdx, gdxInfo, igdx)
+
+# export the constants used in the interface
+export (GMS_VARTYPE, GMS_EQUTYPE)
