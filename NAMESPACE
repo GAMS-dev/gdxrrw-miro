@@ -1,4 +1,4 @@
-useDynLib(gdxrrw, gamsExt=gams, gdxInfoExt=gdxInfo, igdxExt=igdx,
+useDynLib(gdxrrwMIRO, gamsExt=gams, gdxInfoExt=gdxInfo, igdxExt=igdx,
           rgdxExt=rgdx, wgdxExt=wgdx)
 
 # export the functions

@@ -1,4 +1,4 @@
-Package: gdxrrw
+Package: gdxrrwMIRO
 Title: An Interface Between 'GAMS' and R (reshape2 dependency removed
         for MIRO)
 Version: 1.0.4.999

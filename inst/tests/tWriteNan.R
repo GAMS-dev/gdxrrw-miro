@@ -1,7 +1,7 @@
 ## test wgdx on writing a NaN to GDX: should show up as Undf in GDX
 ## with gdxrrw 0.4.0, this was working with R 3.0.2, failing with R 3.1.2
 
-if (! require(gdxrrw))      stop ("gdxrrw package is not available")
+if (! require(gdxrrwMIRO))      stop ("gdxrrw package is not available")
 if (0 == igdx(silent=TRUE)) stop ("the gdx shared library has not been loaded")
 
 testName <- 'writing R-NaN to GDX'

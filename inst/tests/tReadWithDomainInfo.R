@@ -4,7 +4,7 @@
 
 #### wanted lists produced with    dump("listName",file="")
 
-if (! require(gdxrrw))      stop ("gdxrrw package is not available")
+if (! require(gdxrrwMIRO))      stop ("gdxrrw package is not available")
 if (0 == igdx(silent=TRUE)) stop ("the gdx shared library has not been loaded")
 
 source ("chkSame.R")

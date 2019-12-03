@@ -1,7 +1,7 @@
 ### Test wgdx
 # We write all the transport data using sparse writes and a full universe
 
-if (! require(gdxrrw))      stop ("gdxrrw package is not available")
+if (! require(gdxrrwMIRO))      stop ("gdxrrw package is not available")
 if (0 == igdx(silent=TRUE)) stop ("the gdx shared library has not been loaded")
 
 testName <- 'writing trnsport with form="sparse" and full universe'

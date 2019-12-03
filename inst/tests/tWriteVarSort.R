@@ -1,6 +1,6 @@
 #### test wgdx with form='sparse', 2-d variable, on sorted and un-sorted 'val'
 
-if (! require(gdxrrw))      stop ("gdxrrw package is not available")
+if (! require(gdxrrwMIRO))      stop ("gdxrrw package is not available")
 if (0 == igdx(silent=TRUE)) stop ("the gdx shared library has not been loaded")
 
 testName <- 'sorted and unsorted variable writes'
