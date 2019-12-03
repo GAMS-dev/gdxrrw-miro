@@ -1,1 +1,8 @@
+.PHONY: all gdxlib
+
 PKG_CFLAGS = -D_GCL_RHACK_
+
+all: gdxlib $(SHLIB)
+
+gdxlib:
+	(cd gdxlib ; echo "MAKEFLAGS = $(MAKEFLAGS)" ; make )
