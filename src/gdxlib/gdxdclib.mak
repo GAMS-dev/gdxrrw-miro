@@ -48,7 +48,4 @@ else
 endif
 
 DASHG  =false
-TYP    =LIB
-NDIR   =/home/sdirkse/devel/master-buildroot/btree/gdxio/leg/./p3units
 EDIR   =.
-P3SYS  =.

@@ -117,7 +117,7 @@ endif
 
 ifeq ($(UNAME2), Linux86_64_gnu)
 # CC set above
-CFLAGS  = -I. -DLEG -fPIC -m64
+CFLAGS  = -I. -fPIC -m64
 CFLAGS += -D_XOPEN_SOURCE=700 -D_XOPEN_SOURCE_EXTENDED=1
 CFLAGS += -std=c++11
 CFLAGS += -fwrapv
@@ -290,7 +290,7 @@ endif
 
 ifeq ($(UNAME2), Darwin-x64-gnu)
 # CC set above
-CFLAGS	= -I. -DDEG -fPIC -w -m64
+CFLAGS	= -fPIC -w -m64
 CFLAGS += -D_XOPEN_SOURCE=1 -D_XOPEN_SOURCE_EXTENDED=1
 CFLAGS += -std=c++11
 CFLAGS += -fwrapv
