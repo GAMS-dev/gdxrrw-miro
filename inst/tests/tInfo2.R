@@ -1,7 +1,7 @@
 ### Test gdxInfo
 # with returnDF=TRUE we get data frames with symbol info for the transport data
 
-if (! require(gdxrrw))      stop ("gdxrrw package is not available")
+if (! require(gdxrrwMIRO))      stop ("gdxrrw package is not available")
 if (0 == igdx(silent=TRUE)) stop ("the gdx shared library has not been loaded")
 
 # compare the data frames f1 and f2, return TRUE if the same, FALSE o/w

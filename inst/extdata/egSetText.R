@@ -1,6 +1,6 @@
 ## illustrate subtle points about empty text when writing set text
 
-if (! require(gdxrrw))      stop ("gdxrrw package is not available")
+if (! require(gdxrrwMIRO))      stop ("gdxrrw package is not available")
 if (0 == igdx(silent=TRUE)) stop ("the GDX shared library has not been loaded")
 
 ## test with inventSetText at default

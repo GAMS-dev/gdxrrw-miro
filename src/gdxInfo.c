@@ -1,5 +1,5 @@
 /* gdxInfo.c
- * code for gdxrrw::gdxInfo
+ * code for gdxrrwMIRO::gdxInfo
  * $Id: gdxInfo.c 52440 2015-06-11 21:08:22Z sdirkse $
  */
 

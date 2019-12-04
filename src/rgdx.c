@@ -1,5 +1,5 @@
 /* rgdx.c
- * code for gdxrrw::rgdx
+ * code for gdxrrwMIRO::rgdx
  * $Id: rgdx.c 51955 2015-04-30 14:56:55Z sdirkse $
  */
 

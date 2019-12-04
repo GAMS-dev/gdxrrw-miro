@@ -1,6 +1,6 @@
 ## ## test rgdx.XXX wrappers and checking of dataframe names
 
-if (! require(gdxrrw))      stop ("gdxrrw package is not available")
+if (! require(gdxrrwMIRO))      stop ("gdxrrw package is not available")
 if (0 == igdx(silent=TRUE)) stop ("the gdx shared library has not been loaded")
 
 testName <- 'valid variable names in data frame'

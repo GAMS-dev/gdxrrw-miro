@@ -2,7 +2,7 @@
 # We read the transport data using defaults: form=sparse and a full universe
 # This test does near-exhaustive checks on the returned structure
 
-if (! require(gdxrrw))      stop ("gdxrrw package is not available")
+if (! require(gdxrrwMIRO))      stop ("gdxrrw package is not available")
 if (0 == igdx(silent=TRUE)) stop ("the gdx shared library has not been loaded")
 
 source ("chkSame.R")

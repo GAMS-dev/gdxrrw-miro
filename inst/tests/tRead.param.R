@@ -2,7 +2,7 @@
 # we read the distance matrix from the eurodist data set
 # previously stored in a GDX file and compare that to the eurodist data
 
-if (! require(gdxrrw))      stop ("gdxrrw package is not available")
+if (! require(gdxrrwMIRO))      stop ("gdxrrw package is not available")
 if (0 == igdx(silent=TRUE)) stop ("the gdx shared library has not been loaded")
 
 tryCatch({
