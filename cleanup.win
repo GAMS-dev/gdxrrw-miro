@@ -1,0 +1,8 @@
+#!/bin/sh
+
+echo "--------------------------------"
+echo "--- HERE I AM IN cleanup.win ---"
+echo "--------------------------------"
+
+# should start in package root dir
+rm -f src/gdxlib/*.obj src/gdxlib/*.exp src/gdxlib/*.lib src/gdxlib/*.dll
