@@ -1,0 +1,10 @@
+#!/bin/sh
+
+echo "----------------------------"
+echo "--- HERE I AM IN cleanup ---"
+echo "----------------------------"
+
+curdir=`pwd`
+echo "Current dir = $curdir"
+# should start in package root dir
+rm -f src/gdxlib/*.o src/gdxlib/*.obj src/gdxlib/*.dylib src/gdxlib/*.so  src/gdxlib/*.dll
