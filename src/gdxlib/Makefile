@@ -153,7 +153,7 @@ OBJS = $(UNITOBJS) p3io_dll.o p3Custom2.o dtoaLoc.o
 $(TARGET).so: $(OBJS)
 	$(CC) $(SHLIBFLAGS) $(OBJS) -o "$(EDIR)/$(TARGET).so" -m64 -lm -ldl
 p3io_dll.o: p3io.c
-	$(CC) -c $(CFLAGS) -D_P3_LIBRARY -o $@ $<
+	$(CC) $(CFLAGS) -c -D_P3_LIBRARY -o $@ $<
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c -o $@ $<
@@ -206,7 +206,7 @@ OBJS = $(UNITOBJS) p3io_dll.o p3Custom2.o dtoaLoc.o
 $(TARGET).so: $(OBJS)
 	$(CC) $(SHLIBFLAGS) $(OBJS) -o "$(EDIR)/$(TARGET).so" -lm -ldl
 p3io_dll.o: p3io.c
-	$(CC) -c $(CFLAGS) -D_P3_LIBRARY -o $@ $<
+	$(CC) $(CFLAGS) -c -D_P3_LIBRARY -o $@ $<
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c -o $@ $<
@@ -267,7 +267,7 @@ OBJS = $(UNITOBJS) p3io_dll.o p3Custom.o p3Custom2.o dtoaLoc.o
 $(TARGET).so: $(OBJS)
 	$(CC) $(SHLIBFLAGS) $(OBJS) -o "$(EDIR)/$(TARGET).so" $(SHLIBS)
 p3io_dll.o: p3io.c
-	$(CC) -c $(CFLAGS) -D_P3_LIBRARY -o $@ $<
+	$(CC) $(CFLAGS) -c -D_P3_LIBRARY -o $@ $<
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c -o $@ $<
@@ -316,7 +316,7 @@ $(TARGET).dylib: $(OBJS)
 	$(CC) -dynamiclib $(OBJS) -o "$(EDIR)/$(TARGET).dylib" -m64 $(SHLIBFLAGS)
 	install_name_tool $(INSTALLNAMEFLAGS) "$(EDIR)/$(TARGET).dylib"
 p3io_dll.o: p3io.c
-	$(CC) -c $(CFLAGS) -D_P3_LIBRARY -o $@ $<
+	$(CC) $(CFLAGS) -c -D_P3_LIBRARY -o $@ $<
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c -o $@ $<
