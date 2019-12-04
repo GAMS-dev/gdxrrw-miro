@@ -1,15 +1,14 @@
 Package: gdxrrwMIRO
-Title: An Interface Between 'GAMS' and R (reshape2 dependency removed
-        for MIRO)
+Title: An Interface Between 'GAMS' and R (modified somewhat for MIRO)
 Version: 1.0.4.999
 Depends: R (>= 2.14)
-Date: 2018-02-19
-SystemRequirements: GAMS (>= 24.2.1)
-Authors@R: c(person("Steve","Dirkse", role=c("aut","cre"),
-	             email="R@gams.com"),
+Date: 2019-12-04
+SystemRequirements: GAMS (>= 28.2.1)
+Authors@R: c(person("Frederik","Proske", role=c("aut","cre")),
+	     person("Steve","Dirkse", role=c("aut")),
              person("Michael","Ferris", role=c("aut")),
-	     person("Rishabh","Jain", role=c("aut")),
-	     person("Frederik","Proske", role=c("aut")))
+	     person("Rishabh","Jain", role=c("aut"))
+	     )
 Description: A data interface between 'GAMS' and R.  The 'GAMS'
   (General Algebraic Modeling System) software includes a data
   specification called 'GDX' that is the preferred way to store and
@@ -20,8 +19,9 @@ URL: http://www.gams.com
 License: EPL
 LazyData: no
 NeedsCompilation: yes
-Packaged: 2019-05-06 16:20:44 UTC; Freddy
-Author: Steve Dirkse [aut, cre],
+Packaged: 2019-12-04 16:20:44 UTC; Freddy
+Author: Frederik Proske [aut, cre],
+  Steve Dirkse [aut],
   Michael Ferris [aut],
   Rishabh Jain [aut]
-Maintainer: Steve Dirkse <R@gams.com>
+Maintainer: Frederik Proske <miro@gams.com>
