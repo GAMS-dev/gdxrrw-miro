@@ -122,6 +122,7 @@ CFLAGS += -D_XOPEN_SOURCE=700 -D_XOPEN_SOURCE_EXTENDED=1
 CFLAGS += -std=c++11
 CFLAGS += -fwrapv
 CFLAGS += -w
+CFLAGS += -Wno-c++11-narrowing
 # CFLAGS += -Wall
 # CFLAGS += -Wno-dangling-else
 # CFLAGS += -Wno-unused-function
@@ -295,6 +296,7 @@ CFLAGS += -D_XOPEN_SOURCE=1 -D_XOPEN_SOURCE_EXTENDED=1
 CFLAGS += -std=c++11
 CFLAGS += -fwrapv
 CFLAGS += -pthread
+CFLAGS += -Wno-c++11-narrowing
 LDFLAGS =
 ifeq ($(DASHG), true)
 LDFLAGS += -g
