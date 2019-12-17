@@ -35,7 +35,7 @@ P3UNITS =  \
   gmsglobx.OBJ
 
 ifeq ($(OS),Windows_NT)
-	UNAME  =Win64_EMT_ipp
+	UNAME  ?=Win64_EMT_ipp
 	TARGET =gdxdclib64
 else
 	detected_OS := $(shell uname)

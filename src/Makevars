@@ -6,8 +6,11 @@ all: gdxlib $(SHLIB)
 
 gdxlib:
 	if [ -f "C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018.6.287\windows\bin\ipsxe-comp-vars.bat" ]; then \
-        echo "File exists"; \
-		( ./build-win.bat ) \
+        echo "File intel exists"; \
+		( UNAME=Win64_EMT_ipp ./build-win.bat intel ) \
+	elif [ -f "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat" ]; then \
+        echo "File vs exists"; \
+		( UNAME=Windows-i386-vp9 ./build-win.bat vs ) \
 	else \
 		(cd gdxlib ; echo "MAKEFLAGS = $(MAKEFLAGS)" ; make ) \
 	fi
