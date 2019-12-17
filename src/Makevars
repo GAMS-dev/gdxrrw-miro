@@ -5,4 +5,9 @@ PKG_CFLAGS = -D_GCL_RHACK_
 all: gdxlib $(SHLIB)
 
 gdxlib:
-	(cd gdxlib ; echo "MAKEFLAGS = $(MAKEFLAGS)" ; make )
+	if [ -f "C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018.6.287\windows\bin\ipsxe-comp-vars.bat" ]; then \
+        echo "File exists"; \
+		( ./x.bat ) \
+	else \
+		(cd gdxlib ; echo "MAKEFLAGS = $(MAKEFLAGS)" ; make ) \
+	fi
