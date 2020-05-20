@@ -1,0 +1,6 @@
+^.*\.Rproj$
+^\.git$
+^.*\.so$
+^.*\.dylib$
+^.*\.o$
+^\.Rproj\.user$
