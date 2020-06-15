@@ -610,7 +610,7 @@ SEXP rgdx (SEXP args)
     if (!gdxUMUelGet (gdxHandle, iUEL, uelName, &UELUserMapping)) {
       error("Could not gdxUMUelGet");
     }
-    SET_STRING_ELT(universe, iUEL-1, mkChar(uelName));
+    SET_STRING_ELT(universe, iUEL-1, mkCharCE(uelName, CE_UTF8));
   }
 
   /* check relevant options */
@@ -812,7 +812,7 @@ SEXP rgdx (SEXP args)
             if (values[GMS_VAL_LEVEL]) {
               elementIndex = (int) values[GMS_VAL_LEVEL];
               gdxGetElemText(gdxHandle, elementIndex, msg, &IDum);
-              SET_STRING_ELT(outTeSp, matched, mkChar(msg));
+              SET_STRING_ELT(outTeSp, matched, mkCharCE(msg, CE_UTF8));
             }
             else {
               if (NA_LOGICAL == inventSetText)
@@ -826,7 +826,7 @@ SEXP rgdx (SEXP args)
                   if (iDim != symDim-1)
                     strcat(stringEle, ".");
                 }
-                SET_STRING_ELT(outTeSp, matched, mkChar(stringEle));
+                SET_STRING_ELT(outTeSp, matched, mkCharCE(stringEle, CE_UTF8));
               }
             }
             matched++;
@@ -1003,7 +1003,7 @@ SEXP rgdx (SEXP args)
             if (values[GMS_VAL_LEVEL]) {
               elementIndex = (int) values[GMS_VAL_LEVEL];
               gdxGetElemText(gdxHandle, elementIndex, msg, &IDum);
-              SET_STRING_ELT(outTeSp, iRec, mkChar(msg));
+              SET_STRING_ELT(outTeSp, iRec, mkCharCE(msg, CE_UTF8));
             }
             else {
               if (NA_LOGICAL == inventSetText)
@@ -1017,7 +1017,7 @@ SEXP rgdx (SEXP args)
                   if (kk != symDim-1)
                     strcat(stringEle, ".");
                 }
-                SET_STRING_ELT(outTeSp, iRec, mkChar(stringEle));
+                SET_STRING_ELT(outTeSp, iRec, mkCharCE(stringEle, CE_UTF8));
               } /* inventSetText is true */
             }
           } /* if returning set text */
@@ -1454,7 +1454,7 @@ SEXP rgdx (SEXP args)
       outElements++;
       PROTECT(outTs = allocVector(STRSXP, 1));
       rgdxAlloc++;
-      SET_STRING_ELT(outTs, 0, mkChar(symText));
+      SET_STRING_ELT(outTs, 0, mkCharCE(symText, CE_UTF8));
     }
     if (rSpec->te) {
       outElements++;
