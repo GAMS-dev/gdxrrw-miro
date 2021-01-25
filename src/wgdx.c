@@ -806,6 +806,14 @@ registerInputUEL(SEXP sVecVec, int kk, SEXP uelIndex, int *protCount)
 
       rc = gdxUELRegisterStr (gdxHandle, uelString, &gi);
       if (rc != 1) {
+        /* Close GDX file */
+        rc = gdxClose (gdxHandle);
+        if (rc != 0)
+          error("GDXRRW:wgdx:GDXError",
+                "Could not gdxClose: %s", getGDXErrorMsg());
+        (void) gdxFree (&gdxHandle);
+
+        UNPROTECT(*protCount);
         error ("could not register: %s", uelString);
       }
       /* Rprintf("  input: %s  output from gdx: %d\n", uelString, gi); */
