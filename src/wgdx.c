@@ -1644,6 +1644,56 @@ unpackWgdxArgs (SEXP *args, int argLen, SEXP **symList,
   return;
 } /* unpackWgdxArgs */
 
+static void
+checkGdxDataErrors (gdxHandle_t gdxH, char *symName, int nColumns,
+                    gdxUelIndex_t uelIndices, gdxValues_t vals,
+                    int *wgdxAlloc)
+{
+  int errCount, rc;
+  errCount = gdxDataErrorCount (gdxH);
+  if (errCount > 0) {
+    /* maximum of 10 error records */
+    char errMsg[GLOBAL_UEL_IDENT_SIZE * GLOBAL_MAX_INDEX_DIM * 10 + 1024];
+    char uel[GLOBAL_UEL_IDENT_SIZE + 1];
+    int i, j, status;
+
+    sprintf(errMsg, "Duplicate records in symbol: '%s'\n", symName);
+    
+    for (i = 1;  i <= errCount;  i++) {
+      rc = gdxDataErrorRecord (gdxH, i, uelIndices, vals);
+      if (!rc) {
+        error("Error calling gdxDataErrorRecord for symbol '%s': %s",
+              symName, getGDXErrorMsg());
+      }
+      rc = gdxUMUelGet(gdxH, uelIndices[0], uel, &status);
+      if (!rc) {
+        error("Error calling gdxUMUelGet for symbol '%s': %s",
+              symName, getGDXErrorMsg());
+      }
+      strncat(errMsg, uel, sizeof(errMsg) - strlen(errMsg) - 1);
+      uel[0] = '.';
+      for (j = 1; j < nColumns; j++) {
+        rc = gdxUMUelGet(gdxH, uelIndices[j], uel + 1, &status);
+        if (!rc) {
+          error("Error calling gdxUMUelGet for symbol '%s': %s",
+                symName, getGDXErrorMsg());
+        }
+        strncat(errMsg, uel, sizeof(errMsg) - strlen(errMsg) - 1);
+      }
+      strncat(errMsg, "\n", sizeof(errMsg) - strlen(errMsg) - 1);
+    }
+    /* Close GDX file */
+    rc = gdxClose (gdxH);
+    if (rc != 0)
+      error("GDXRRW:wgdx:GDXError",
+            "Could not gdxClose: %s", getGDXErrorMsg());
+    (void) gdxFree (&gdxH);
+
+    UNPROTECT(*wgdxAlloc);
+    error("GDXRRW:wgdx:GDXDupError:%s", errMsg);
+  }
+  return;
+} /* checkGdxDataErrors */
 
 /* writeGdx
  * gdxFileName: name of GDX file to be written
@@ -1970,6 +2020,10 @@ writeGdx (char *gdxFileName, int symListLen, SEXP *symList,
         if (!gdxDataWriteDone(gdxHandle))
           error ("Error calling gdxDataWriteDone for symbol '%s': %s",
                  wSpecPtr[iSym]->name, getGDXErrorMsg());
+
+        checkGdxDataErrors(gdxHandle, wSpecPtr[iSym]->name, nColumns,
+                           uelIndices, vals, &wgdxAlloc);
+
         addDomInfo (wSpecPtr[iSym]->name, domExp, domInfoExp);
       }    /* if set or parameter */
       else {
@@ -2087,6 +2141,10 @@ writeGdx (char *gdxFileName, int symListLen, SEXP *symList,
         if (!gdxDataWriteDone(gdxHandle))
           error ("Error calling gdxDataWriteDone for symbol '%s': %s",
                  wSpecPtr[iSym]->name, getGDXErrorMsg());
+
+        checkGdxDataErrors(gdxHandle, wSpecPtr[iSym]->name, nColumns,
+                           uelIndices, vals, &wgdxAlloc);
+
         addDomInfo (wSpecPtr[iSym]->name, domExp, domInfoExp);
       }
     } /* if sparse */
@@ -2166,6 +2224,10 @@ writeGdx (char *gdxFileName, int symListLen, SEXP *symList,
         if (!gdxDataWriteDone(gdxHandle))
           error ("Error calling gdxDataWriteDone for symbol '%s': %s",
                  wSpecPtr[iSym]->name, getGDXErrorMsg());
+
+        checkGdxDataErrors(gdxHandle, wSpecPtr[iSym]->name, nColumns,
+                           uelIndices, vals, &wgdxAlloc);
+
         addDomInfo (wSpecPtr[iSym]->name, domExp, domInfoExp);
       } /* if a set or parameter */
       else {
@@ -2233,6 +2295,10 @@ writeGdx (char *gdxFileName, int symListLen, SEXP *symList,
         if (!gdxDataWriteDone(gdxHandle))
           error ("Error calling gdxDataWriteDone for symbol '%s': %s",
                  wSpecPtr[iSym]->name, getGDXErrorMsg());
+
+        checkGdxDataErrors(gdxHandle, wSpecPtr[iSym]->name, symDim,
+                           uelIndices, vals, &wgdxAlloc);
+
         addDomInfo (wSpecPtr[iSym]->name, domExp, domInfoExp);
       }
     } /* end of writing full data */
