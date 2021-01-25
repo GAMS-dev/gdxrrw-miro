@@ -1660,8 +1660,8 @@ checkGdxDataErrors (gdxHandle_t gdxH, char *symName, int nColumns,
   int errCount, rc;
   errCount = gdxDataErrorCount (gdxH);
   if (errCount > 0) {
-    /* maximum of 10 error records */
-    char errMsg[GLOBAL_UEL_IDENT_SIZE * GLOBAL_MAX_INDEX_DIM * 10 + 1024];
+    /* maximum of 11 error records */
+    char errMsg[GLOBAL_UEL_IDENT_SIZE * GLOBAL_MAX_INDEX_DIM * 11 + 1024];
     char uel[GLOBAL_UEL_IDENT_SIZE + 1];
     int i, j, status;
 
