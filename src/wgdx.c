@@ -1665,7 +1665,7 @@ checkGdxDataErrors (gdxHandle_t gdxH, char *symName, int nColumns,
     char uel[GLOBAL_UEL_IDENT_SIZE + 1];
     int i, j, status;
 
-    sprintf(errMsg, "Duplicate records in symbol: '%s'\n", symName);
+    sprintf(errMsg, "%s\n", symName);
     
     for (i = 1;  i <= errCount;  i++) {
       rc = gdxDataErrorRecord (gdxH, i, uelIndices, vals);
