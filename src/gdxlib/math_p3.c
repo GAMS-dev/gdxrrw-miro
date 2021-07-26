@@ -34,7 +34,6 @@ static SYSTEM_int64 MATH_P3_mantmask;
  */
 
 #elif defined(BGP) || defined(__linux__)
-# include <fpu_control.h>
 # include <fenv.h>
 #elif defined(SOL)
 # include <ieeefp.h>
@@ -300,13 +299,13 @@ Function(_P3set_elem *) MATH_P3_getexceptionmask(
 }
 #elif defined(__linux__)
 {
-  fpu_control_t cw;
-
-  _FPU_GETCW(cw);
+  fenv_t fenv;
+  
+  (void) fegetenv (&fenv);
   /* this code depends on the bits in the set element result being
    * ordered in a certain way (like Delphi does)
    */
-  *result = cw & 0x3f;
+  *result = fenv.__control_word & 0x3f;
 }
 #elif defined(SOL)
 {

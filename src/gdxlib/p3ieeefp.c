@@ -18,7 +18,6 @@ SYSTEM_double P3IEEEFP_infnegative;
 #elif defined(__APPLE__)
 # include <fenv.h>
 #elif defined(BGP) || defined(__linux__)
-# include <fpu_control.h>
 # include <fenv.h>
 #elif defined(SOL)
 # include <ieeefp.h>
