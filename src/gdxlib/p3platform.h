@@ -11,12 +11,12 @@ typedef SYSTEM_byte P3PLATFORM_tosplatform; /* Anonymous */ enum{P3PLATFORM_oswi
   P3PLATFORM_ossunos_sparc32,P3PLATFORM_ososf1,P3PLATFORM_osdarwin,
   P3PLATFORM_oslinux86_64,P3PLATFORM_ossunos_i86pc,
   P3PLATFORM_ossunos_sparc64,P3PLATFORM_osdarwin_i386,
-  P3PLATFORM_osdarwin_x64,P3PLATFORM_osbluegene,P3PLATFORM_osmissing};
-typedef _P3STR_63 _arr_1P3PLATFORM[18];
+  P3PLATFORM_osdarwin_x64,P3PLATFORM_osbluegene,P3PLATFORM_osdarwin_arm64,P3PLATFORM_osmissing};
+typedef _P3STR_63 _arr_1P3PLATFORM[19];
 extern _arr_1P3PLATFORM P3PLATFORM_osplatformtext;
-typedef _P3STR_7 _arr_2P3PLATFORM[18];
+typedef _P3STR_7 _arr_2P3PLATFORM[19];
 extern _arr_2P3PLATFORM P3PLATFORM_osdllextension;
-typedef _P3STR_3 _arr_3P3PLATFORM[18];
+typedef _P3STR_3 _arr_3P3PLATFORM[19];
 extern _arr_3P3PLATFORM P3PLATFORM_osdllprefix;
 
 Function(P3PLATFORM_tosfiletype ) P3PLATFORM_osfiletype(void);

@@ -353,6 +353,9 @@ Function(SYSTEM_ansichar *) P3UTILS_loadpathvarname(
     case P3PLATFORM_osdarwin_x64: 
       _P3strcpy(result,_len_ret,_P3str1("\021DYLD_LIBRARY_PATH"));
       break;
+    case P3PLATFORM_osdarwin_arm64: 
+      _P3strcpy(result,_len_ret,_P3str1("\021DYLD_LIBRARY_PATH"));
+      break;
     case P3PLATFORM_osbluegene: 
     case P3PLATFORM_oslinux: 
     case P3PLATFORM_oslinux86_64: 

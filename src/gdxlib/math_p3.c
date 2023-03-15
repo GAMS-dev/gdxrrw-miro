@@ -269,6 +269,24 @@ Function(_P3set_elem *) MATH_P3_getexceptionmask(
   if (!(cw & _FPU_MASK_UM)) ADD2MASK(EX_UNDERFLOW );
   if (!(cw & _FPU_MASK_XM)) ADD2MASK(EX_PRECISION );
 }
+#elif defined(__APPLE__) && defined(__arm64__)
+{
+  fenv_t fenv;
+  unsigned long long cw;
+
+  /* on ARM64, fenv.__fpcr seems to specify which floating-point exceptions should raise an exception (SIGILL (not even SIGFPE))
+   * while on all other systems the floating-point control register says which exceptions should be masked (=not raise an exception)
+   * that's why we negated the condition in the following if's
+   */
+  (void) fegetenv (&fenv);
+  cw = fenv.__fpcr & (__fpcr_trap_invalid | __fpcr_trap_denormal | __fpcr_trap_divbyzero | __fpcr_trap_overflow | __fpcr_trap_underflow | __fpcr_trap_inexact);
+  if (!(cw & __fpcr_trap_invalid  )) ADD2MASK(EX_INVALIDOP );
+  if (!(cw & __fpcr_trap_denormal )) ADD2MASK(EX_DENORMAL  );
+  if (!(cw & __fpcr_trap_divbyzero)) ADD2MASK(EX_ZERODIVIDE);
+  if (!(cw & __fpcr_trap_overflow )) ADD2MASK(EX_OVERFLOW  );
+  if (!(cw & __fpcr_trap_underflow)) ADD2MASK(EX_UNDERFLOW );
+  if (!(cw & __fpcr_trap_inexact  )) ADD2MASK(EX_PRECISION );
+}
 #elif defined(__APPLE__) && defined(__GNUC__) /* Mac, GCC compilers */
 {
   fenv_t fenv;
@@ -354,6 +372,35 @@ Function(_P3set_elem *) MATH_P3_setexceptionmask(
   if (ISINMASK(MATH_P3_exprecision   )) tcw |= _EM_INEXACT   ;
   (void) _control87 (tcw,_MCW_EM);
 }
+#elif defined(__APPLE__) && defined(__arm64__)
+{
+  fenv_t fenv;
+  unsigned long long oldcw, newcw;
+
+  /* on ARM64, fenv.__fpcr seems to specify which floating-point exceptions should raise an exception (SIGILL (not even SIGFPE))
+   * while on all other systems the floating-point control register says which exceptions should be masked (=not raise an exception)
+   * that's why we negated the condition in the following if's
+   */
+  (void) fegetenv (&fenv);
+  oldcw = fenv.__fpcr & (__fpcr_trap_invalid | __fpcr_trap_denormal | __fpcr_trap_divbyzero | __fpcr_trap_overflow | __fpcr_trap_underflow | __fpcr_trap_inexact);
+  if (!(oldcw & __fpcr_trap_invalid   )) ADD2MASK(EX_INVALIDOP );
+  if (!(oldcw & __fpcr_trap_denormal  )) ADD2MASK(EX_DENORMAL  );
+  if (!(oldcw & __fpcr_trap_divbyzero )) ADD2MASK(EX_ZERODIVIDE);
+  if (!(oldcw & __fpcr_trap_overflow  )) ADD2MASK(EX_OVERFLOW  );
+  if (!(oldcw & __fpcr_trap_underflow )) ADD2MASK(EX_UNDERFLOW );
+  if (!(oldcw & __fpcr_trap_inexact   )) ADD2MASK(EX_PRECISION );
+
+  newcw = 0;
+  if (!ISINMASK(MATH_P3_exinvalidop ))   newcw |= __fpcr_trap_invalid  ;
+  if (!ISINMASK(MATH_P3_exdenormalized)) newcw |= __fpcr_trap_denormal ;
+  if (!ISINMASK(MATH_P3_exzerodivide))   newcw |= __fpcr_trap_divbyzero;
+  if (!ISINMASK(MATH_P3_exoverflow  ))   newcw |= __fpcr_trap_overflow ;
+  if (!ISINMASK(MATH_P3_exunderflow ))   newcw |= __fpcr_trap_underflow;
+  if (!ISINMASK(MATH_P3_exprecision ))   newcw |= __fpcr_trap_inexact  ;
+  fenv.__fpcr &= ~(__fpcr_trap_invalid | __fpcr_trap_denormal | __fpcr_trap_divbyzero | __fpcr_trap_overflow | __fpcr_trap_underflow | __fpcr_trap_inexact);
+  fenv.__fpcr |= newcw;
+  (void) fesetenv (&fenv);
+} /* all macOS */
 #elif defined(AIX)
 {
   fptrap_t traps;
