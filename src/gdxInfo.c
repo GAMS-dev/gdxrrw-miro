@@ -296,7 +296,7 @@ gdxInfo (SEXP args)
             if (1 == gdxUMUelGet (gdxHandle, Keys[j-1], UelName, &iDummy))
               Rprintf ("'%s'", UelName);
             else {
-              Rprintf ("L__", Keys[j-1]);
+              Rprintf ("L__");
               BadUels++;
             }
             if (j < symDim)

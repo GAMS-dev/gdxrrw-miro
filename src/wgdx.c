@@ -381,7 +381,7 @@ getFieldMapping (SEXP val, SEXP labels, SEXP *fVec, wSpec_t *wSpec, int *protCou
         fPtr[k-1] = GMS_VAL_SCALE;
       }
       else {
-        error ("variable/equation field name '%s' not valid");
+        error ("variable/equation field name '%s' not valid", fieldName);
       }
     }
   } /*   if (sparse == wSpec->dForm) */
@@ -430,7 +430,7 @@ getFieldMapping (SEXP val, SEXP labels, SEXP *fVec, wSpec_t *wSpec, int *protCou
         fPtr[k] = GMS_VAL_SCALE;
       }
       else {
-        error ("variable/equation field name '%s' not valid");
+        error ("variable/equation field name '%s' not valid", fieldName);
       }
     } /* loop over field labels */
   }
@@ -809,8 +809,7 @@ registerInputUEL(SEXP sVecVec, int kk, SEXP uelIndex, int *protCount)
         /* Close GDX file */
         rc = gdxClose (gdxHandle);
         if (rc != 0)
-          error("GDXRRW:wgdx:GDXError",
-                "Could not gdxClose: %s", getGDXErrorMsg());
+          error("GDXRRW:wgdx:GDXError:Could not gdxClose: %s", getGDXErrorMsg());
         (void) gdxFree (&gdxHandle);
 
         UNPROTECT(*protCount);
@@ -1693,8 +1692,7 @@ checkGdxDataErrors (gdxHandle_t gdxH, char *symName, int nColumns,
     /* Close GDX file */
     rc = gdxClose (gdxH);
     if (rc != 0)
-      error("GDXRRW:wgdx:GDXError",
-            "Could not gdxClose: %s", getGDXErrorMsg());
+      error("GDXRRW:wgdx:GDXError:Could not gdxClose: %s", getGDXErrorMsg());
     (void) gdxFree (&gdxH);
 
     UNPROTECT(*wgdxAlloc);
@@ -2315,8 +2313,7 @@ writeGdx (char *gdxFileName, int symListLen, SEXP *symList,
   /* Close GDX file */
   errNum = gdxClose (gdxHandle);
   if (errNum != 0)
-    error("GDXRRW:wgdx:GDXError",
-          "Could not gdxClose: %s", getGDXErrorMsg());
+    error("GDXRRW:wgdx:GDXError:Could not gdxClose: %s", getGDXErrorMsg());
   (void) gdxFree (&gdxHandle);
 
   UNPROTECT(wgdxAlloc);
