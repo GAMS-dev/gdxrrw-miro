@@ -788,7 +788,7 @@ char *getGlobalString (const char *globName, shortStringBuf_t result)
   if (gamsoIsUnset)
     return res;
 
-  gamso = findVar (install("gamso"), R_GlobalEnv);
+  gamso = R_getVarEx (install("gamso"), R_GlobalEnv, TRUE, R_UnboundValue);
 
   if (gamso == NULL || TYPEOF(gamso) != VECSXP) {
     gamsoIsUnset = 1;
@@ -965,7 +965,7 @@ int isCompress (void)
   shortStringBuf_t fName;
 
   str = NULL;
-  gamso = findVar( install("gamso"), R_GlobalEnv );
+  gamso = R_getVarEx( install("gamso"), R_GlobalEnv, TRUE, R_UnboundValue );
 
   if (gamso == NULL || TYPEOF(gamso) == NILSXP  ||  TYPEOF(gamso) == SYMSXP) {
     globalGams = 0;
