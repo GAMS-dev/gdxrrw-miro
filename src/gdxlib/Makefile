@@ -117,7 +117,13 @@ endif
 
 ifeq ($(UNAME2), Linux86_64_gnu)
 # CC set above
-CFLAGS  = -I. -fPIC -m64
+MACHINE_ARCH := $(shell uname -m)
+ifeq ($(MACHINE_ARCH), x86_64)
+M64FLAG = -m64
+else
+M64FLAG =
+endif
+CFLAGS  = -I. -fPIC $(M64FLAG)
 CFLAGS += -D_XOPEN_SOURCE=700 -D_XOPEN_SOURCE_EXTENDED=1
 CFLAGS += -std=c++11
 CFLAGS += -fwrapv
@@ -152,7 +158,7 @@ UNITOBJS = $(P3UNITS:.OBJ=.o)
 
 OBJS = $(UNITOBJS) p3io_dll.o p3Custom2.o dtoaLoc.o
 $(TARGET).so: $(OBJS)
-	$(CC) $(SHLIBFLAGS) $(OBJS) -o "$(EDIR)/$(TARGET).so" -m64 -lm -ldl
+	$(CC) $(SHLIBFLAGS) $(OBJS) -o "$(EDIR)/$(TARGET).so" $(M64FLAG) -lm -ldl
 p3io_dll.o: p3io.c
 	$(CC) $(CFLAGS) -c -D_P3_LIBRARY -o $@ $<
 

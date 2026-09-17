@@ -315,10 +315,30 @@ Function(_P3set_elem *) MATH_P3_getexceptionmask(
   if (cw & FE_UNDERFLOW ) ADD2MASK(EX_UNDERFLOW );
   if (cw & FE_INEXACT   ) ADD2MASK(EX_PRECISION );
 }
+#elif defined(__linux__) && defined(__aarch64__)
+{
+  fenv_t fenv;
+  unsigned int cw;
+
+  /* on aarch64, the FPCR trap-enable bits are the FE_* exception flag bits
+   * (from bits/fenv.h) shifted left by FE_EXCEPT_SHIFT; when a trap-enable
+   * bit is set, that exception raises SIGFPE instead of being silently
+   * flagged - the opposite sense of masking on x86, so we negate the
+   * condition just like the __APPLE__ && __arm64__ branch above
+   */
+  (void) fegetenv (&fenv);
+  cw = fenv.__fpcr & (FE_ALL_EXCEPT << FE_EXCEPT_SHIFT);
+  if (!(cw & (FE_INVALID   << FE_EXCEPT_SHIFT))) ADD2MASK(EX_INVALIDOP );
+                                                  ADD2MASK(EX_DENORMAL  );
+  if (!(cw & (FE_DIVBYZERO << FE_EXCEPT_SHIFT))) ADD2MASK(EX_ZERODIVIDE);
+  if (!(cw & (FE_OVERFLOW  << FE_EXCEPT_SHIFT))) ADD2MASK(EX_OVERFLOW  );
+  if (!(cw & (FE_UNDERFLOW << FE_EXCEPT_SHIFT))) ADD2MASK(EX_UNDERFLOW );
+  if (!(cw & (FE_INEXACT   << FE_EXCEPT_SHIFT))) ADD2MASK(EX_PRECISION );
+}
 #elif defined(__linux__)
 {
   fenv_t fenv;
-  
+
   (void) fegetenv (&fenv);
   /* this code depends on the bits in the set element result being
    * ordered in a certain way (like Delphi does)
@@ -499,6 +519,34 @@ Function(_P3set_elem *) MATH_P3_setexceptionmask(
   fenv.__control = cw;
   (void) fesetenv (&fenv);
 } /* DEI,DII */
+#elif defined(__linux__) && defined(__aarch64__)
+{
+  fenv_t fenv;
+  unsigned int oldcw, newcw;
+  unsigned int trapAll = FE_ALL_EXCEPT << FE_EXCEPT_SHIFT;
+
+  /* see the comment in the getexceptionmask __aarch64__ branch: FPCR
+   * trap-enable bits have the opposite sense of an x86 control word mask
+   */
+  (void) fegetenv (&fenv);
+  oldcw = fenv.__fpcr & trapAll;
+  if (!(oldcw & (FE_INVALID   << FE_EXCEPT_SHIFT))) ADD2MASK(EX_INVALIDOP );
+                                                     ADD2MASK(EX_DENORMAL  );
+  if (!(oldcw & (FE_DIVBYZERO << FE_EXCEPT_SHIFT))) ADD2MASK(EX_ZERODIVIDE);
+  if (!(oldcw & (FE_OVERFLOW  << FE_EXCEPT_SHIFT))) ADD2MASK(EX_OVERFLOW  );
+  if (!(oldcw & (FE_UNDERFLOW << FE_EXCEPT_SHIFT))) ADD2MASK(EX_UNDERFLOW );
+  if (!(oldcw & (FE_INEXACT   << FE_EXCEPT_SHIFT))) ADD2MASK(EX_PRECISION );
+
+  newcw = 0;
+  if (!ISINMASK(MATH_P3_exinvalidop )) newcw |= FE_INVALID   << FE_EXCEPT_SHIFT;
+  if (!ISINMASK(MATH_P3_exzerodivide)) newcw |= FE_DIVBYZERO << FE_EXCEPT_SHIFT;
+  if (!ISINMASK(MATH_P3_exoverflow  )) newcw |= FE_OVERFLOW  << FE_EXCEPT_SHIFT;
+  if (!ISINMASK(MATH_P3_exunderflow )) newcw |= FE_UNDERFLOW << FE_EXCEPT_SHIFT;
+  if (!ISINMASK(MATH_P3_exprecision )) newcw |= FE_INEXACT   << FE_EXCEPT_SHIFT;
+  fenv.__fpcr &= ~trapAll;
+  fenv.__fpcr |= newcw;
+  (void) fesetenv (&fenv);
+}
 #elif defined(__linux__)
 {
 #if 1
